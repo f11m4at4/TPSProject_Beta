@@ -21,7 +21,7 @@ public:
 	virtual void BeginPlay() override;
 
 	// 사용자 입력맵핑 처리 함수
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent){};
+	virtual void SetupInputBinding(class UInputComponent* PlayerInputComponent){};
 public:
 
 	// 컴포넌트 소유 액터
