@@ -3,6 +3,7 @@
 #include <Camera/CameraComponent.h>
 #include "PlayerMove.h"
 #include "PlayerFire.h"
+#include "TPSProject.h"
 
 ATPSPlayer::ATPSPlayer()
 {
@@ -69,14 +70,40 @@ ATPSPlayer::ATPSPlayer()
 	}
 
 	playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
-	playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
+	//playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
 }
 
-// Called when the game starts or when spawned
+void ATPSPlayer::TestFunc(FName name)
+{
+	UE_LOG(LogTemp, Warning, TEXT("TestFunc Call : %s"), *name.ToString());
+}
+
+void ATPSPlayer::PlayDelegate()
+{
+	// 일반 델리게이트
+	myVar.ExecuteIfBound(TEXT("Single Brad"));
+	// 멀티캐스트 델리게이트
+	myMultiVar.Broadcast(TEXT("Multi Brad"));
+}
+
 void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	/*
+	myVar.BindUObject(this, &ATPSPlayer::TestFunc);
+	myVar.BindUFunction(this, TEXT("TestFunc"));
+	myVar.BindLambda([this](FName name)->void {});
+	// Dynamic Delegate
+	myDynamicVar.BindDynamic(this, &ATPSPlayer::TestFunc);
+	// Multicast Delegate
+	myMultiVar.AddUObject(this, &ATPSPlayer::TestFunc);
+	// Dynamic Multicast Delegate
+	myDMVar.AddDynamic(this, &ATPSPlayer::TestFunc);
+
+	FTimerHandle timer;
+	GetWorld()->GetTimerManager().SetTimer(timer, this, &ATPSPlayer::PlayDelegate, 2);
+	*/
 }
 
 // Called every frame
@@ -92,9 +119,10 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
 	// 컴포넌트에서 입력 바인딩 처리 하도록 호출
-	playerMove->SetupInputBinding(PlayerInputComponent);
-	playerFire->SetupInputBinding(PlayerInputComponent);
+	onInputBindingDelegate.Broadcast(PlayerInputComponent);
 
+	/*playerMove->SetupInputBinding(PlayerInputComponent);
+	playerFire->SetupInputBinding(PlayerInputComponent);*/
 }
 
 

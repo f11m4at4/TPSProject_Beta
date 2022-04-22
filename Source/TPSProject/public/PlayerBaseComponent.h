@@ -16,7 +16,10 @@ public:
 	{
 		// Tick 함수 호출되지 않도록 처리
 		PrimaryComponentTick.bCanEverTick = false;
+		bWantsInitializeComponent = true;
 	};
+
+	virtual void InitializeComponent() override;
 
 	virtual void BeginPlay() override;
 

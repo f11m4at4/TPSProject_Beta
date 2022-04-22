@@ -6,17 +6,38 @@
 #include "GameFramework/Character.h"
 #include "TPSPlayer.generated.h"
 
+
+DECLARE_DELEGATE_OneParam(FMyDelegate, FName);
+DECLARE_DYNAMIC_DELEGATE_OneParam(FMyDynamicDelegate, FName, name);
+DECLARE_MULTICAST_DELEGATE_OneParam(FMyMultiDelegate, FName);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMyDMDelegate, FName, name);
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FInputBindingDelegate, class UInputComponent*);
+
+
 // 목표 : 사용자의 좌우입력을 받아 이동하고 싶다.
 // 필요속성 : 이동속도, 이동방향
 UCLASS()
 class TPSPROJECT_API ATPSPlayer : public ACharacter
 {
 	GENERATED_BODY()
+public:
+	// 입력바인딩 델리게이트
+	FInputBindingDelegate onInputBindingDelegate;
 
 public:
 	// Sets default values for this character's properties
 	ATPSPlayer();
 
+	FMyDelegate myVar;
+	FMyDynamicDelegate myDynamicVar;
+	FMyMultiDelegate myMultiVar;
+	FMyDMDelegate myDMVar;
+
+	UFUNCTION()
+	void TestFunc(FName name);
+
+	void PlayDelegate();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -46,4 +67,5 @@ public:
 	class UPlayerBaseComponent* playerMove;
 	UPROPERTY(VisibleAnywhere, Category = Component)
 	class UPlayerBaseComponent* playerFire;
+
 };
