@@ -8,6 +8,7 @@
 #include <Blueprint/UserWidget.h>
 #include <Camera/CameraComponent.h>
 #include "PlayerAnim.h"
+#include <Particles/ParticleSystem.h>
 
 UPlayerFire::UPlayerFire()
 {
@@ -16,6 +17,36 @@ UPlayerFire::UPlayerFire()
 	if (tempSound.Succeeded())
 	{
 		bulletSound = tempSound.Object;
+	}
+	// 총알 공장 가져오기
+	ConstructorHelpers::FClassFinder<ABullet> tempBullet(TEXT("Blueprint'/Game/Blueprints/BP_Bullet.BP_Bullet_C'"));
+	if (tempBullet.Succeeded())
+	{
+		bulletFactory = tempBullet.Class;
+	}
+	// SniperUI 가져오기
+	ConstructorHelpers::FClassFinder<UUserWidget> tempSnierWidget(TEXT("WidgetBlueprint'/Game/Blueprints/WBP_SniperUI.WBP_SniperUI_C'"));
+	if (tempSnierWidget.Succeeded())
+	{
+		sniperUIFactory = tempSnierWidget.Class;
+	}
+	// Crosshair UI 가져오기
+	ConstructorHelpers::FClassFinder<UUserWidget> tempCrosshairWidget(TEXT("WidgetBlueprint'/Game/Blueprints/WBP_Crosshair.WBP_Crosshair_C'"));
+	if (tempCrosshairWidget.Succeeded())
+	{
+		crosshairUIFactory = tempCrosshairWidget.Class;
+	}
+	// 총알 파편 효과 가져오기
+	ConstructorHelpers::FObjectFinder<UParticleSystem> tempEffect(TEXT("ParticleSystem'/Game/StarterContent/Particles/P_BulletEffect.P_BulletEffect'"));
+	if (tempEffect.Succeeded())
+	{
+		bulletEffectFactory = tempEffect.Object;
+	}
+	// Camera Shake 가져오기
+	ConstructorHelpers::FClassFinder<UCameraShakeBase> tempCameraShake(TEXT("Blueprint'/Game/Blueprints/BP_CameraShake.BP_CameraShake_C'"));
+	if (tempCameraShake.Succeeded())
+	{
+		cameraShake = tempCameraShake.Class;
 	}
 }
 
