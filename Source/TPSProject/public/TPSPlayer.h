@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,14 +15,14 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMyDMDelegate, FName, name);
 DECLARE_MULTICAST_DELEGATE_OneParam(FInputBindingDelegate, class UInputComponent*);
 
 
-// ¸ñÇ¥ : »ç¿ëÀÚÀÇ ÁÂ¿ìÀÔ·ÂÀ» ¹Ş¾Æ ÀÌµ¿ÇÏ°í ½Í´Ù.
-// ÇÊ¿ä¼Ó¼º : ÀÌµ¿¼Óµµ, ÀÌµ¿¹æÇâ
+// ëª©í‘œ : ì‚¬ìš©ìì˜ ì¢Œìš°ì…ë ¥ì„ ë°›ì•„ ì´ë™í•˜ê³  ì‹¶ë‹¤.
+// í•„ìš”ì†ì„± : ì´ë™ì†ë„, ì´ë™ë°©í–¥
 UCLASS()
 class TPSPROJECT_API ATPSPlayer : public ACharacter
 {
 	GENERATED_BODY()
 public:
-	// ÀÔ·Â¹ÙÀÎµù µ¨¸®°ÔÀÌÆ®
+	// ì…ë ¥ë°”ì¸ë”© ë¸ë¦¬ê²Œì´íŠ¸
 	FInputBindingDelegate onInputBindingDelegate;
 
 public:
@@ -55,11 +55,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	class UCameraComponent* tpsCamComp;
 
-	// ÃÑ ½ºÄÌ·¹Å»¸Ş½¬
+	// ì´ ìŠ¤ì¼ˆë ˆíƒˆë©”ì‰¬
 	UPROPERTY(VisibleAnywhere, Category=GunMesh)
 	class USkeletalMeshComponent* gunMeshComp;
 
-	// ½º³ªÀÌÆÛ°Ç ½ºÅ×Æ½¸Ş½¬ Ãß°¡
+	// ìŠ¤ë‚˜ì´í¼ê±´ ìŠ¤í…Œí‹±ë©”ì‰¬ ì¶”ê°€
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
 	class UStaticMeshComponent* sniperGunComp;
 public:
@@ -68,4 +68,18 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Component)
 	class UPlayerBaseComponent* playerFire;
 
+	// í˜„ì¬ì²´ë ¥
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=Health)
+	int32 hp;
+	// ì´ˆê¸° hp ê°’
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Health)
+	int32 initialHp = 10;
+
+	// í”¼ê²© ë°›ì•˜ì„ ë•Œ ì²˜ë¦¬
+	UFUNCTION(BlueprintCallable, Category = Health)
+	void OnHitEvent();
+
+	// ê²Œì„ì˜¤ë²„ ë  ë•Œ í˜¸ì¶œë  í•¨ìˆ˜
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Health)
+	void OnGameOver();
 };

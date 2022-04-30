@@ -4,6 +4,7 @@
 #include "PlayerMove.h"
 #include "PlayerFire.h"
 #include "TPSProject.h"
+#include <Kismet/GameplayStatics.h>
 
 ATPSPlayer::ATPSPlayer()
 {
@@ -90,6 +91,8 @@ void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	hp = initialHp;
+
 	/*
 	myVar.BindUObject(this, &ATPSPlayer::TestFunc);
 	myVar.BindUFunction(this, TEXT("TestFunc"));
@@ -125,7 +128,22 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	playerFire->SetupInputBinding(PlayerInputComponent);*/
 }
 
+void ATPSPlayer::OnHitEvent()
+{
+	PRINT_LOG(TEXT("Damaged !!!!!"));
+	hp--;
+	if (hp <= 0)
+	{
+		PRINT_LOG(TEXT("Player is dead!"));
+		OnGameOver();
+	}
+}
 
+void ATPSPlayer::OnGameOver_Implementation()
+{
+	// 게임오버시 일시정지
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+}
 
 
 

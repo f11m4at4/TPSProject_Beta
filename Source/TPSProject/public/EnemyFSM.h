@@ -71,7 +71,7 @@ public:
 	void OnDamageProcess();
 
 	// 체력
-	UPROPERTY(EditDefaultsOnly, Category=FSM)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=FSM)
 	int32 hp = 3;
 	// 피격대기시간
 	UPROPERTY(EditAnywhere, Category=FSM)
