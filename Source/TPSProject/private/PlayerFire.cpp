@@ -153,6 +153,9 @@ void UPlayerFire::ChangeToGrenadeGun()
 	bUsingGrenadeGun = true;
 	sniperGunComp->SetVisibility(false);
 	gunMeshComp->SetVisibility(true);
+
+	// 유탄총 사용할지 여부 전달
+	me->OnUsingGrenade(bUsingGrenadeGun);
 }
 
 // 스나이퍼건으로 변경
@@ -162,6 +165,9 @@ void UPlayerFire::ChangeToSniperGun()
 	bUsingGrenadeGun = false;
 	sniperGunComp->SetVisibility(true);
 	gunMeshComp->SetVisibility(false);
+
+	// 유탄총 사용할지 여부 전달
+	me->OnUsingGrenade(bUsingGrenadeGun);
 }
 
 // 스나이퍼 조준
