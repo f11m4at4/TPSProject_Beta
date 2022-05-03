@@ -74,4 +74,4 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 
 # Sample Asset ignore
-EnvironmentPack3/*
+**/EnvironmentPack3/**
